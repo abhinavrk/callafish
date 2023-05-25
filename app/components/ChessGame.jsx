@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Button, Alert, AlertTitle} from '@mui/material';
 
 const ChessGame = () => {
   const [fen, setFen] = useState('start');
@@ -65,14 +66,25 @@ const ChessGame = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-    <Chessboard position={fen} onDrop={handleMove} />
-    {
-      (game && game.isGameOver()) &&
-      <div>
-        Thank you for the game - the game is over now
+    <div class="container mx-auto px-4 py-20">
+      <div class="min-h-20 py-5">
+      {
+        game && game.isGameOver() &&
+        <Alert severity="info">
+          <AlertTitle>Game Over</AlertTitle>
+          Thank you for the game!
+        </Alert>
+      }
       </div>
-    }
+
+      <div class="flex flex-row gap-x-5">
+        <div>
+          <Chessboard position={fen} onDrop={handleMove} class="px-5" />
+        </div>
+        <div>
+          <Button variant="contained">Fish Me!</Button>
+        </div>
+      </div>
     </div>
   );
 };

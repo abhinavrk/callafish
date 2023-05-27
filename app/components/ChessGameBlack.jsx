@@ -51,7 +51,7 @@ const ChessGameBlack = ({ whitePeerId }) => {
 
     peer.sendData({
       ...moveData,
-      type: 'human',
+      type: "human",
     });
     setFen(game.fen());
   };
@@ -73,10 +73,10 @@ const ChessGameBlack = ({ whitePeerId }) => {
 
     peer.sendData({
       lan: lan,
-      type: 'engine',
+      type: "engine",
     });
     setFen(game.fen());
-  }
+  };
 
   const handleOpponentMove = (oppData) => {
     let moveData;
@@ -141,11 +141,11 @@ const ChessGameBlack = ({ whitePeerId }) => {
   }
 
   function canFish() {
-    return game && game.turn() === "b" && (lives > 0);
+    return game && game.turn() === "b" && lives > 0;
   }
 
   function analyzePosition() {
-    Lichess().analyzePosition(game, 'black');
+    Lichess().analyzePosition(game, "black");
   }
 
   if (!Chessboard || !peerId || !conn) {
@@ -158,13 +158,13 @@ const ChessGameBlack = ({ whitePeerId }) => {
       <h1 class="text-2xl py-10 font-bold">Call a Fish</h1>
       <div class="text-lg py-10">
         <p>
-          This is a chess variant that gives you 3 opportunities to
-          ask an engine for advice. You can get the engine to play on your behalf by
+          This is a chess variant that gives you 3 opportunities to ask an
+          engine for advice. You can get the engine to play on your behalf by
           hitting the "Fish Me!" button.
         </p>
         <p>
-          You will not get the eval, or the continuation. The engine simply plays a move for you
-          and you take it from there.
+          You will not get the eval, or the continuation. The engine simply
+          plays a move for you and you take it from there.
         </p>
       </div>
       <div class="flex flex-row gap-x-5">
@@ -188,6 +188,12 @@ const ChessGameBlack = ({ whitePeerId }) => {
               Fish Me ({lives})!
             </Button>
           )}
+
+          {game && game.isGameOver() && (
+            <Button variant="destructive" onClick={analyzePosition}>
+              Analyze on Lichess.
+            </Button>
+          )}
         </div>
       </div>
       {game && game.isGameOver() && (
@@ -195,14 +201,9 @@ const ChessGameBlack = ({ whitePeerId }) => {
           <Alert>
             <AlertTitle>Game Over!</AlertTitle>
             <AlertDescription>Thank you for the game.</AlertDescription>
-            <div class="py-5">
-            <Button variant="destructive" onClick={analyzePosition}>
-              Analyze on Lichess.
-            </Button>
-            </div>
           </Alert>
         </div>
-       )}
+      )}
     </div>
   );
 };

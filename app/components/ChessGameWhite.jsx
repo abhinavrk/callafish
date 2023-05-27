@@ -157,6 +157,7 @@ const ChessGameWhite = () => {
   if (!conn) {
     return (
       <div class="container mx-auto">
+        <h1 class="text-2xl py-10 font-bold">Call a Fish</h1>
         <div class="flex flex-col gap-y-20">
           <div class="flex flex-row justify-center">
             {peerId && (
@@ -193,7 +194,7 @@ const ChessGameWhite = () => {
 
   // conn, peer, and chessboard are all present
   return (
-    <div class="container mx-auto px-10 py-20">
+    <div class="container mx-auto">
       <h1 class="text-2xl py-10 font-bold">Call a Fish</h1>
       <div class="text-lg py-10">
         <p>

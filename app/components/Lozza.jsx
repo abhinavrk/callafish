@@ -1,7 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
-import {Button} from '~/components/ui/button';
-
 const Lozza = () => {
   let lozza = null;
 

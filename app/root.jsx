@@ -15,6 +15,15 @@ export const links = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
+export const meta = () => {
+  return [{
+    title: "Call a Fish",
+    description:
+      "For when you want to cheat, but only kinda",
+  }];
+};
+
+
 export default function App() {
   return (
     <html lang="en" className="dark">

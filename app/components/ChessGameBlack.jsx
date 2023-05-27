@@ -3,7 +3,7 @@ import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import Lozza from "~/components/Lozza";
 
-const ChessGameWhite = () => {
+const ChessGameBlack = ({ whitePeerId }) => {
   const [fen, setFen] = useState("start");
   const [game, setGame] = useState(null);
   const [Chessboard, setChessboard] = useState(null);
@@ -11,7 +11,6 @@ const ChessGameWhite = () => {
   const [peer, setPeer] = useState(null);
   const [peerId, setPeerId] = useState(null);
   const [conn, setConn] = useState(null);
-  const [clipboard, setClipboard] = useState(null);
   const [lives, setLives] = useState(3);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const ChessGameWhite = () => {
   }, []);
 
   const handleHumanMove = ({ sourceSquare, targetSquare, promotion }) => {
-    if (game.turn() === "b") {
+    if (game.turn() === "w") {
       return "snapback";
     }
 
@@ -51,12 +50,16 @@ const ChessGameWhite = () => {
 
     peer.sendData({
       ...moveData,
-      type: "human",
+      type: 'human',
     });
     setFen(game.fen());
   };
 
   const handleEngineMove = (lan) => {
+    if (game.turn() === "w") {
+      return "snapback";
+    }
+
     let move;
     try {
       move = game.move(lan);
@@ -69,7 +72,7 @@ const ChessGameWhite = () => {
 
     peer.sendData({
       lan: lan,
-      type: "engine",
+      type: 'engine',
     });
     setFen(game.fen());
   }
@@ -99,13 +102,6 @@ const ChessGameWhite = () => {
     setFen(game.fen());
   };
 
-  function copyPeerIdToClipboard() {
-    let currentUrl = window.location.href;
-    let blackUrl = `${currentUrl}${peerId}`;
-    navigator.clipboard.writeText(blackUrl);
-    setClipboard(true);
-  }
-
   useEffect(() => {
     const lozzaWorker = Lozza();
     lozzaWorker.initLozza();
@@ -117,6 +113,8 @@ const ChessGameWhite = () => {
       peer.initPeer();
       let actualPeerId = await peer.getPeerId();
       setPeerId(actualPeerId);
+
+      peer.connectToPeer(whitePeerId);
 
       let actualConn = await peer.getConnection();
       setConn(actualConn);
@@ -142,7 +140,7 @@ const ChessGameWhite = () => {
   }
 
   function canFish() {
-    return game && game.turn() === "w" && (lives > 0);
+    return game && game.turn() === "b" && (lives > 0);
   }
 
   function analyzePosition() {
@@ -156,45 +154,8 @@ const ChessGameWhite = () => {
     openInNewTab('https://lichess.org/paste');
   }
 
-  if (!Chessboard || !peerId) {
+  if (!Chessboard || !peerId || !conn) {
     return <div>Loading...</div>;
-  }
-
-  if (!conn) {
-    return (
-      <div class="container mx-auto py-20">
-        <div class="flex flex-col gap-y-20">
-          <div class="flex flex-row justify-center">
-            {peerId && (
-              <Button variant="destructive" onClick={copyPeerIdToClipboard}>
-                <p class="text-xl">Play against a friend!</p>
-              </Button>
-            )}
-          </div>
-
-          <div class="flex flex-row justify-center">
-            {clipboard && (
-              <Alert>
-                <AlertTitle class="font-bold text-xl">
-                  URL copied to clipboard!
-                </AlertTitle>
-                <AlertDescription>
-                  <p>
-                    A URL has been copied to your clipboard. Share this URL with
-                    your friend. Once they've connected you should be able to
-                    see a chessboard and play a game as white.
-                  </p>
-                  <p>
-                    If you wanted to play as black, ask them to start the game
-                    and give you the URL.
-                  </p>
-                </AlertDescription>
-              </Alert>
-            )}
-          </div>
-        </div>
-      </div>
-    );
   }
 
   // conn, peer, and chessboard are all present
@@ -214,7 +175,12 @@ const ChessGameWhite = () => {
       </div>
       <div class="flex flex-row gap-x-5">
         <div>
-          <Chessboard position={fen} onDrop={handleHumanMove} class="px-5" />
+          <Chessboard
+            position={fen}
+            onDrop={handleHumanMove}
+            class="px-5"
+            orientation="black"
+          />
         </div>
         <div class="flex flex-col gap-y-10">
           {canFish() && (
@@ -242,9 +208,9 @@ const ChessGameWhite = () => {
             </div>
           </Alert>
         </div>
-      )}
+       )}
     </div>
   );
 };
 
-export default ChessGameWhite;
+export default ChessGameBlack;

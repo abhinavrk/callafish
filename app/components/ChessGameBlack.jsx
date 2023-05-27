@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import Lozza from "~/components/Lozza";
+import Lichess from "~/components/Lichess";
 
 const ChessGameBlack = ({ whitePeerId }) => {
   const [fen, setFen] = useState("start");
@@ -144,14 +145,7 @@ const ChessGameBlack = ({ whitePeerId }) => {
   }
 
   function analyzePosition() {
-    const openInNewTab = (url) => {
-      const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-      if (newWindow) newWindow.opener = null
-    }
-
-    let pgn = game.pgn();
-    navigator.clipboard.writeText(pgn);
-    openInNewTab('https://lichess.org/paste');
+    Lichess().analyzePosition(game, 'black');
   }
 
   if (!Chessboard || !peerId || !conn) {

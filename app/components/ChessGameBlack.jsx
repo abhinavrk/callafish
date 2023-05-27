@@ -3,6 +3,7 @@ import { Alert, AlertTitle, AlertDescription } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import Lozza from "~/components/Lozza";
 import Lichess from "~/components/Lichess";
+import { Link } from "@remix-run/react";
 
 const ChessGameBlack = ({ whitePeerId }) => {
   const [fen, setFen] = useState("start");
@@ -155,7 +156,14 @@ const ChessGameBlack = ({ whitePeerId }) => {
   // conn, peer, and chessboard are all present
   return (
     <div class="container mx-auto">
-      <h1 class="text-2xl py-10 font-bold">Call a Fish</h1>
+      <div class="py-10">
+        <h1 class="text-2xl font-bold">Call a Fish</h1>
+        <p>
+          Copyright of{" "}
+          <Link to="https://github.com/abhinavrk">Abhinav Ramakrishnan</Link> &{" "}
+          <Link to="https://github.com/KerimovEmil">Emil Kerimov</Link>
+        </p>
+      </div>
       <div class="text-lg py-10">
         <p>
           This is a chess variant that gives you 3 opportunities to ask an

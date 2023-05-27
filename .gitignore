@@ -1,7 +1,14 @@
-.DS_Store
 node_modules
+.cache
 
-/.cache
-/build
-/public/build
+node_modules/*
+.cache/*
+
 .env
+.vercel
+.output
+
+/build/
+/public/build
+/api/index.js
+/api/index.js.map

@@ -156,7 +156,7 @@ const ChessGameWhite = () => {
 
   if (!conn) {
     return (
-      <div class="container mx-auto py-20">
+      <div class="container mx-auto">
         <div class="flex flex-col gap-y-20">
           <div class="flex flex-row justify-center">
             {peerId && (

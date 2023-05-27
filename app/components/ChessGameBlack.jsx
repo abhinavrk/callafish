@@ -141,7 +141,7 @@ const ChessGameBlack = ({ whitePeerId }) => {
   }
 
   function canFish() {
-    return game && game.turn() === "b" && lives > 0;
+    return game && game.turn() === "b" && lives > 0 && !game.isGameOver();
   }
 
   function analyzePosition() {

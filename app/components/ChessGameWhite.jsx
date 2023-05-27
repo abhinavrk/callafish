@@ -143,7 +143,7 @@ const ChessGameWhite = () => {
   }
 
   function canFish() {
-    return game && game.turn() === "w" && lives > 0;
+    return game && game.turn() === "w" && lives > 0 && !game.isGameOver();
   }
 
   function analyzePosition() {

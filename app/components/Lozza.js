@@ -14,7 +14,7 @@ const Lozza = () => {
 
     lozza.postMessage("ucinewgame"); // reset tt
     lozza.postMessage(`position startpos moves ${lans.join(" ")} `);
-    lozza.postMessage("go depth 10"); // 10 ply search
+    lozza.postMessage("go depth 16");
 
     lozza.onmessage = function (event) {
       let data = event.data;
